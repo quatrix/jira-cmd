@@ -20,7 +20,8 @@ requirejs([
   '../lib/jira/worklog',
   '../lib/jira/link',
   '../lib/jira/watch',
-], function (program, config, auth, ls, describe, assign, comment, create, sprint, transitions, worklog, link, watch) {
+  '../lib/jira/users',
+], function (program, config, auth, ls, describe, assign, comment, create, sprint, transitions, worklog, link, watch, users) {
 
      function finalCb(){
        process.exit(1);
@@ -214,6 +215,17 @@ requirejs([
           } else {
             describe.show(issue);
           }
+        }
+      });
+    });
+
+  program
+    .command('users')
+    .description('Show all assignable users')
+    .action(function (issue, options) {
+      auth.setConfig(function (auth) {
+        if (auth) {
+          users.list();
         }
       });
     });
